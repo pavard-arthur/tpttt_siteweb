@@ -1,0 +1,4 @@
+FLASK_APP=tpttt
+FLASK_DEBUG=True
+
+

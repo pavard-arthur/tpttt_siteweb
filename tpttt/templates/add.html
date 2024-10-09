@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{title}}</h1>
+<div class="sample">
+<a href="{{url_for('author')}}">
+    <p>add author</p>
+    </a>
+    <a href="{{url_for('book')}}">
+        <p>add book</p>
+        </a>
+</div>
+{% endblock %}

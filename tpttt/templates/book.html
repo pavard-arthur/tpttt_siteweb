@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card border-light mb-3 mycard">
+    <div class="card-header">{{ book.title }}</div>
+    <a href="{{ book.url }}" target='_blank'>
+            <img src="{{ url_for('static', filename='images/'+book.img) }}" alt="Couverture de {{ book.title }}"
+                    title="{{ book.title }}" class="card-img-top" />
+    </a>
+    <div class="card-body">
+            <h5 class="card-text card-footer">
+                <a href="{{ url_for('author',id=book.author_id) }}"> Auteur : {{ book.author }} </a>
+            </h5>
+            <h6 class="card-text card-footer">
+                Prix : {{ book.price }} €
+        </h6>
+    </div>
+</div>
+{% endblock %}
