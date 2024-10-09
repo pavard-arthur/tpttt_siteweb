@@ -38,7 +38,6 @@ pip install -r requirements.txt
 #   run      Run a development server.
 #   shell    Run a shell in the app context.
 #   syncdb   Creates all missing tables
-flask syncdb
 flask loaddb
 flask run
 ```
@@ -57,12 +56,15 @@ flask run
     - [X] main page samples
     - [X] book
     - [X] author
+    - [ ] categories
     - [ ] favorites
 - [ ] edit
     - [ ] book
     - [X] author
+    - [ ] categories
     - [ ] favorites
 - [ ] add
     - [ ] book
     - [ ] author
+    - [ ] categories
     - [ ] favorites
