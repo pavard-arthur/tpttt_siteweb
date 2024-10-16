@@ -4,63 +4,64 @@ from flask_login import UserMixin
 
 
 class Author(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
+    Auth_id = db.Column(db.Integer, primary_key=True)
+    Auth_name = db.Column(db.String(100))
 
     def __repr__(self):
-        return f"<Author {self.id} {self.name}>"
+        return f"<Author {self.Auth_id} {self.Auth_name}>"
 
 
 class Categorie(db.Model):
-    name = db.Column(db.String(50), primary_key=True)
+    Cat_name = db.Column(db.String(50), primary_key=True)
+
+    Cat_Book = db.relationship("Book",secondary="BookCat",backref=db.backref("Books_Cat", lazy="dynamic"))
+
 
     def __repr__(self):
-        return f"<Categorie {self.name}>"
+        return f"<Categorie {self.Cat_name}>"
 
 
 class Book(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    img = db.Column(db.String(100))
-    price = db.Column(db.Float)
-    title = db.Column(db.String(100))
-    url = db.Column(db.String(200))
+    Book_id = db.Column(db.Integer, primary_key=True)
+    Book_img = db.Column(db.String(100))
+    Book_price = db.Column(db.Float)
+    Book_title = db.Column(db.String(100))
+    Book_url = db.Column(db.String(200))
 
-    author_id = db.Column(db.Integer, db.ForeignKey("author.id"))
-    author = db.relationship(
-        "Author", backref=db.backref("books", lazy="dynamic"))
+    Book_author_id = db.Column(db.Integer, db.ForeignKey("author.Auth_id"))
+    Book_author = db.relationship("Author", backref=db.backref("Auth_books", lazy="dynamic"))
 
-    # need many to many
-    # https://stackoverflow.com/questions/5756559/how-to-build-many-to-many-relations-using-sqlalchemy-a-good-example
-    # categories_name = db.Column(
-    #     db.String(50), db.ForeignKey("Categorie.name"))
-    # categories = db.relationship(
-    #     "Categorie", backref=db.backref("books", lazy="dynamic"))
+    Book_Cat = db.relationship("Categorie",secondary="BookCat",backref=db.backref("Cat_Books", lazy="dynamic"))
+
 
     def __repr__(self):
-        return f"<Book {self.id} {self.title} {self.price} {self.author} {self.Categorie}>"
+        return f"<Book {self.Book_id} {self.Book_title} {self.Book_price} {self.Book_author} {self.Book_categories}>"
 
 class Favorite(db.Model):
-    name = db.Column(db.String(50), primary_key=True)
+    FAV_id = db.Column(db.Integer, primary_key=True)
 
-    # books_name = db.Column(
-    #     db.String(50), db.ForeignKey("Book.id"))
-    # books = db.relationship(
-    #     "Book", backref=db.backref("favorites", lazy="dynamic"))
+    FAV_books_id = db.Column(db.Integer, db.ForeignKey("Book.Book_id"))
+    FAV_books = db.relationship("Book", backref=db.backref("Book_FAV", lazy="dynamic"))
 
     def __repr__(self):
         return f"<Favorite {self.name}>"
 
-class User(db.Model, UserMixin):
-    username = db.Column(db.String(50), primary_key=True)
-    password = db.Column(db.String(64))
+class BookCat(db.Model):
+    # need many to many
+    # https://stackoverflow.com/questions/5756559/how-to-build-many-to-many-relations-using-sqlalchemy-a-good-example
+    Book_Cat_id = db.Column(db.Integer, primary_key=True)
+    Book_Cat_Book_id = db.Column(db.Integer, db.ForeignKey("Book.Book_id"))
+    Book_Cat_Cat_name = db.Column(db.String(50), db.ForeignKey("Categorie.Cat_name"))
 
-    favorite_name = db.Column(
-        db.String(50), db.ForeignKey("Favorite.name"))
-    # favorite = db.relationship(
-    #     "Favorite", backref=db.backref("users", lazy="dynamic"))
+class User(db.Model, UserMixin):
+    U_username = db.Column(db.String(50), primary_key=True)
+    U_password = db.Column(db.String(64))
+
+    U_FAV_if = db.Column(db.String(50), db.ForeignKey("Favorite.FAV_id"))
+    U_FAV = db.relationship("Favorite", backref=db.backref("FAV_U", lazy="dynamic"))
 
     def get_id(self):
-        return f"<User {self.username}>"
+        return f"<User {self.U_username}>"
 
 
 def get_sample():
@@ -76,7 +77,7 @@ def get_author(id: int):
 
 
 def get_book_by_author(id: int):
-    return Author.query.get_or_404(id).books.all()
+    return Author.query.get_or_404(id).Auth_books.all()
 
 
 @login_manager.user_loader

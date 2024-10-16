@@ -1,4 +1,4 @@
-from .models import Author, Book
+from .models import Author, Book , Categorie
 import yaml
 import click
 from .app import app, db
@@ -17,18 +17,18 @@ def loaddb(filename):
     for b in books:
         a = b["author"]
         if a not in authors:
-            o = Author(name=a)
+            o = Author(Auth_name=a)
             db.session.add(o)
             authors[a] = o
     db.session.commit()
     # deuxième passe: création de tous les livres
     for b in books:
         a = authors[b["author"]]
-        o = Book(price=b["price"],
-                title=b["title"],
-                url=b["url"],
-                img=b["img"],
-                author_id=a.id)
+        o = Book(Book_price=b["price"],
+                Book_title=b["title"],
+                Book_url=b["url"],
+                Book_img=b["img"],
+                Book_author_id=a.id)
         db.session.add(o)
     db.session.commit()
 
@@ -46,7 +46,7 @@ def newuser(username , password):
     from hashlib import sha256
     m = sha256()
     m.update(password.encode())
-    u = User(username=username, password=m.hexdigest())
+    u = User(U_username=username, U_password=m.hexdigest())
     db.session.add(u)
     db.session.commit()
 
@@ -60,5 +60,5 @@ def passwd(username , password):
     m = sha256()
     m.update(password.encode())
     x = User.query.get(username)
-    x.password = m.hexdigest()
+    x.U_password = m.hexdigest()
     db.session.commit()
