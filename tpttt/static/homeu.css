@@ -1,0 +1,115 @@
+:root {
+    --primary-color: red;
+    --secondary-color: lightcoral;
+    --bg-active-color: crimson;
+    --constraste-text-color: white;
+    --background-color: antiquewhite;
+
+    --footer-background-color: #343a40;
+    
+    --bs-body-bg: var(--background-color) !important;
+    --bs-body-font-family: Arial, sans-serif !important;
+    --bs-primary: var(--primary-color) !important;
+    --bs-secondary: var(--secondary-color) !important
+}
+
+body {
+    font-family: Arial, sans-serif !important;
+    background-color: var(--background-color); 
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: var(--primary-color); 
+    text-align: center; 
+    margin-top: 20px; 
+}
+
+div.sample {
+    text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+footer {
+    width: 100%;
+    color: var(--constraste-text-color);
+    background-color: var(--footer-background-color) !important;
+    text-align: center;
+    padding: 1em; 
+    margin-top: auto;
+}
+
+main {
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+
+main>* {
+    flex: 1;
+}
+
+main > .container {
+    padding: 60px 15px 0;
+}
+
+div.mycard {
+    margin: auto;
+    width: 18rem; 
+}
+
+.btn  , .btn-primary{
+    background-color: var(--primary-color) !important; 
+    color: white !important; 
+    margin: 5px; 
+}
+
+.btn:hover , .btn-primary:hover {
+    background-color: var(--bg-active-color) !important; 
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important; 
+    border-color: var(--primary-color) !important; 
+}
+
+.btn-primary:hover {
+    background-color: var(--bg-active-color) !important; 
+    border-color: var(--bg-active-color) !important; 
+}
+
+a {
+    color: var(--primary-color); 
+    text-decoration: none; 
+}
+
+a:hover {
+    text-decoration: underline; 
+}
+
+table , .even-color {
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+th, td  , .even-color>*{
+    padding: 8px; 
+    text-align: left; 
+    border: 1px solid var(--constraste-text-color) !important; 
+}
+
+th {
+    background-color: var(--footer-background-color) !important; 
+    color: var(--constraste-text-color) !important; 
+}
+
+tr:nth-child(even) , .even-color:nth-child(even) {
+    background-color: var(--secondary-color) !important; 
+}
+
+tr:hover , .even-color:hover{
+    background-color: var(--bg-active-color) !important; 
+}

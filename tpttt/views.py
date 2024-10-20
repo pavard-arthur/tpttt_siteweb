@@ -1,4 +1,5 @@
-from .app import app, db
+import datetime
+from .app import app, db , login_manager
 import tpttt.models as models
 from .models import User, Author, Genre
 from flask import render_template, redirect, url_for, request
@@ -9,6 +10,11 @@ from hashlib import sha256
 from flask_login import login_user, current_user, logout_user, login_required
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
+# User loader function
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
 # Forms
 
 
@@ -18,18 +24,21 @@ class AuthorForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username')
-    password = PasswordField('Password')
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
     next = HiddenField()
 
     def get_authenticated_user(self):
         user = User.query.get(self.username.data)
         if user is None:
             return None
+        
         m = sha256()
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
-        return user if passwd == user.password else None
+        
+        return user if passwd == user.U_password else None
+
 
 
 class GenreForm(FlaskForm):
@@ -76,6 +85,7 @@ def home():
 @app.route("/book/<int:id>")
 def book(id):
     book = models.get_book(id)
+    # print(book)
     return render_template("book.html", book=book)
 
 
@@ -102,14 +112,16 @@ def login():
     elif form.validate_on_submit():
         user = form.get_authenticated_user()
         if user:
-            login_user(user)
-            next = form.next.data or url_for("home")
-            return redirect(next)
+            login_user(user, remember=True)  
+            next_url = form.next.data or url_for("home")
+            return redirect(next_url)
     return render_template("login.html", form=form)
+
 
 
 @app.route("/logout/")
 def logout():
+    print("WARNING : LOGOUT")
     logout_user()
     return redirect(url_for('home'))
 
@@ -172,7 +184,12 @@ def add_genre():
 # EDIT Routes
 @app.route("/edit")
 def edit():
-    return render_template("edit.html")
+    # raw dog fetch all from model
+    authors = models.Author.query.all()  
+    books = models.Book.query.all()      
+    genres = models.Genre.query.all()    
+    return render_template("edit.html", authors=authors, books=books, genres=genres)
+
 
 @app.route("/edit/book/<int:id>", methods=("GET", "POST"))
 @login_required
@@ -189,7 +206,7 @@ def edit_book(id):
             genres=form.genres.data  # Update the many-to-many relationship
         )
         return redirect(url_for("book", id=id))
-    return render_template("edit_book.html", form=form)
+    return render_template("edit_book.html",book=book, form=form)
 
 
 @app.route("/edit/author/<int:id>", methods=("GET", "POST"))
@@ -200,7 +217,7 @@ def edit_author(id):
     if form.validate_on_submit():
         models.update_author(author, name=form.name.data)
         return redirect(url_for("author", id=id))
-    return render_template("edit_author.html", form=form)
+    return render_template("edit_author.html", author=author,form=form)
 
 
 @app.route("/edit/genre/<int:id>", methods=("GET", "POST"))
@@ -211,7 +228,7 @@ def edit_genre(id):
     if form.validate_on_submit():
         models.update_genre(genre, name=form.name.data)
         return redirect(url_for("genre", id=id))
-    return render_template("edit_genre.html", form=form)
+    return render_template("edit_genre.html",genre=genre, form=form)
 
 
 # REMOVE
@@ -250,19 +267,19 @@ def remove_genre(id):
 @app.route("/favorites/")
 @login_required
 def favorites():
-    favorites = models.get_favorites(current_user.username)
+    favorites = models.get_favorites(current_user.U_username)
     return render_template("favorites.html", books=favorites)
 
 
 @app.route("/add/favorite/<int:book_id>")
 @login_required
 def add_to_favorites(book_id):
-    models.add_favorite(current_user.username, book_id)
+    models.add_favorite(current_user.U_username, book_id)
     return redirect(url_for("favorites"))
 
 
 @app.route("/remove/favorite/<int:book_id>")
 @login_required
 def remove_from_favorites(book_id):
-    models.remove_favorite(current_user.username, book_id)
+    models.remove_favorite(current_user.U_username, book_id)
     return redirect(url_for("favorites"))

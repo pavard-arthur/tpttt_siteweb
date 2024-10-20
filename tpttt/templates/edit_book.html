@@ -33,12 +33,11 @@
     </div>
     <div class="mb-3">
         <label for="genres" class="form-label">Genres</label>
-        {{ form.genres(class="form-control") }} <!-- Assuming form.genres is a select field -->
+        {{ form.genres(class="form-control") }}
         {% for error in form.genres.errors %}
         <div class="text-danger">{{ error }}</div>
         {% endfor %}
     </div>
     <button type="submit" class="btn btn-primary">Save Changes</button>
-    <a href="{{ url_for('book', id=form.id.data) }}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}

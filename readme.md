@@ -45,6 +45,10 @@ flask loaddb
 flask run
 ```
 
+```bash
+default login : admin passwd
+```
+
 # TODO
 - [X] flask set up
 - [X] bootstrap set up
@@ -79,3 +83,10 @@ flask run
     - [X] create genres table
     - [X] many-to-many relationship (books & genres)
     - [X] genres management (form or command)
+
+il y a toujour des bugs ...
+ll y assez peu des update git désoler 
+j'ai du forcer le css avec !important
+aussi "fun" fact , sur windows avec vs code
+ca a réussie a bouffer 9 Gig de ram
+![image](./our_ram.png)

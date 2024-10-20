@@ -10,7 +10,7 @@
     />
 
     {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='home.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homeu.css')}}" />
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }} {% endblock %}
 
@@ -19,67 +19,72 @@
   </head>
   <body>
     <header>
-      <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">My Books</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right HERE">
-              {% if current_user.is_authenticated %}
-              <li><a style="color: red">{{ current_user.username }}</a></li>
-              <li>
-                <a href="{{ url_for('logout') }}">
-                  <span
-                    class="glyphicon glyphicon -log-out"
-                    title="Logout"
-                    alt="logout_logo"
-                    alt-text="logout_logo"
-                  ></span>
-                  <p>logout</p></a
-                >
-              </li>
-              {% else %}
-              <li>
-                <a href="{{ url_for('login') }}"> <p>login</p></a>
-              </li>
-              {% endif %}
-            </ul>
-            <form class="d-flex" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('home') }}">My Books</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarCollapse"
+              aria-controls="navbarCollapse"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('add') }}">Add</a> <!-- Add link -->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('edit') }}">Edit</a> <!-- Edit link -->
+                </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('favorites') }}">Favorites</a> <!-- Favorites link -->
+                </li>
+                {% endif %}
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li><h1>{{ current_user.U_username }}</h1></li>
+                <li>
+                  <a href="{{ url_for('logout') }}">
+                    <span
+                      class="glyphicon glyphicon-log-out"
+                      title="Logout"
+                      aria-hidden="true"
+                    ></span>
+                    <p>Logout</p>
+                  </a>
+                </li>
+                {% else %}
+                <li>
+                  <a href="{{ url_for('login') }}"> <p>Login</p></a>
+                </li>
+                {% endif %}
+              </ul>
+              <form class="d-flex" role="search" action="{{ url_for('search') }}" method="GET">
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  name="query"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">
+                  Search
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
-      </nav>
-    </header>
+        </nav>        
+      </header>      
     <!-- Your page content -->
-    <main class="flex-shrink-0">
+    <main class="">
       <div class="container">
         {% block content %} {% endblock %} {% block main %} {% endblock %}
       </div>

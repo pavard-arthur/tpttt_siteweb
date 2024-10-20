@@ -2,6 +2,8 @@ from .models import Author, Book, Genre
 import yaml
 import click
 from .app import app, db
+from .models import User
+from hashlib import sha256
 
 
 @app.cli.command()
@@ -40,6 +42,11 @@ def loaddb(filename):
                  genre=default_Genre)  # Assign default Genre
         db.session.add(o)
 
+    # add default user
+    m = sha256()
+    m.update(str("passwd").encode())
+    u = User(U_username="admin", U_password=m.hexdigest())
+    db.session.add(u)
     db.session.commit()
 
 
@@ -54,11 +61,9 @@ def syncdb():
 @click.argument('password')
 def newuser(username, password):
     """Adds a new user."""
-    from .models import User
-    from hashlib import sha256
     m = sha256()
     m.update(password.encode())
-    u = User(username=username, password=m.hexdigest())
+    u = User(U_username=username, U_password=m.hexdigest())
     db.session.add(u)
     db.session.commit()
 

@@ -9,7 +9,7 @@ dotenv.load_dotenv()
 
 app = Flask(__name__)
 app.config['BOOTSTRAP_SERVE_LOCAL'] = True
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY","1234")
 bootstrap = Bootstrap5(app)
 
 login_manager = LoginManager(app)

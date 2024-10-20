@@ -1,18 +1,52 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card border-light mb-3 mycard">
-    <div class="card-header">{{ book.title }}</div>
-    <a href="{{ book.url }}" target='_blank'>
-            <img src="{{ url_for('static', filename='images/'+book.img) }}" alt="Couverture de {{ book.title }}"
-                    title="{{ book.title }}" class="card-img-top" />
-    </a>
-    <div class="card-body">
+<div class="container mt-5">
+    <div class="card border-light mb-3 mycard">
+        <div class="card-header">{{ book.B_title }}</div>
+        <a href="{{ book.url }}" target="_blank">
+            <img src="{{ url_for('static', filename='images/' + book.B_img) }}" alt="Couverture de {{ book.B_title }}"
+                 title="{{ book.B_title }}" class="card-img-top" />
+        </a>
+        <div class="card-body">
             <h5 class="card-text card-footer">
-                <a href="{{ url_for('author',id=book.author_id) }}"> Auteur : {{ book.author }} </a>
+                <a href="{{ url_for('author', id=book.A_id) }}">Auteur : {{ book.author.A_name }}</a>
             </h5>
             <h6 class="card-text card-footer">
-                Prix : {{ book.price }} €
-        </h6>
+                Prix : {{ book.B_price }} €
+            </h6>
+            <a href="{{ url_for('edit_book', id=book.B_id) }}" class="btn btn-primary">Edit Book</a>
+        </div>
     </div>
+
+    <h3>Genres</h3>
+    {% if book.genre %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for genre in book.genres %}
+            <tr>
+                <td>{{ genre.C_id }}</td>
+                <td><a href="{{ url_for('genre', id=genre.C_id) }}">{{ genre.C_name }}</a></td>
+                <td>
+                    <a href="{{ url_for('edit_genre', id=genre.C_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ url_for('remove', item_type='genre', id=genre.C_id) }}" class="btn btn-danger btn-sm" 
+                       onclick="return confirm('Are you sure you want to delete this genre?');">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3" class="text-center">No genres available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No genres available for this book.</p>
+    {% endif %}
 </div>
 {% endblock %}

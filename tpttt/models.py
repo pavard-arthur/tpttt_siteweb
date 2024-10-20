@@ -20,7 +20,8 @@ class Author(db.Model):
 class Genre(db.Model):
     C_id = db.Column(db.Integer, primary_key=True)
     C_name = db.Column(db.String(50), nullable=False)
-
+    # books = db.relationship('Book', backref='genre', lazy=True)
+    
     def __repr__(self):
         return f"<Genre {self.C_id} {self.C_name}>"
 
@@ -40,14 +41,14 @@ class Book(db.Model):
     genre = db.relationship("Genre", backref=db.backref("books", lazy=True))
 
     def __repr__(self):
-        return f"<Book {self.B_id} {self.B_title}>"
+        return f"<Book {self.B_id} {self.B_title} {self.B_price} {self.author} {self.genre}>"
 
 
 
-class User(db.Model, UserMixin):
+class User(db.Model , UserMixin):
     U_username = db.Column(db.String(50), primary_key=True)
     U_password = db.Column(db.String(64))
-
+    
     # Relationship for favorite books
     favorites = db.relationship('Book',
                                 secondary=favorite_books,
@@ -80,7 +81,7 @@ def get_genre(id: int):
 
 
 def get_books_by_genre(id: int):
-    return Genre.query.get_or_404(id).books.all()
+    return Genre.query.get_or_404(id).books
 
 
 def get_favorites(user_id: str):
