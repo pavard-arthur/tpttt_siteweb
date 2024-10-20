@@ -2,7 +2,7 @@
 {% block content %}
     <h1>Edit author: {{ author.A_name }}</h1>
     <form role="form" method="POST"
-    action="{{ url_for('edit/author',id=author.A_id) }}">
+    action="{{ url_for('edit_author',id=author.A_id) }}">
         {{ form.hidden_tag() }}
         <div class=
             {% if form.name.errors %}
@@ -22,5 +22,9 @@
         </ul>
         {% endif %}
         <input class="btn btn-default" type="submit" value="Enregistrer">
+    </form>
+    <form method="POST" action="{{ url_for('remove_author', id=author.A_id) }}" class="mt-3">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger">Delete author</button>
     </form>
 {% endblock %}

@@ -9,11 +9,11 @@
         </tr>
     </thead>
     <tbody>
-        {% for favorite in favorites %}
+        {% for favorite in books %}
         <tr>
             <td>{{ favorite.B_title }}</td>
             <td>
-                <a href="{{ url_for('remove_favorite', id=favorite.id) }}" class="btn btn-danger">Remove</a>
+                <a href="{{ url_for('remove_from_favorites', book_id=favorite.B_id) }}" class="btn btn-danger">Remove</a>
             </td>
         </tr>
         {% endfor %}

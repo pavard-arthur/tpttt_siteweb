@@ -63,11 +63,11 @@ default login : admin passwd
     - [X] main page samples
     - [X] book
     - [X] author
-    - [X] genres
+    - [ ] genres
 - [X] edit
     - [X] book
     - [X] author
-    - [X] favorites
+    - [ ] favorites
 - [X] add
     - [X] book
     - [X] author
@@ -89,4 +89,6 @@ ll y assez peu des update git désoler
 j'ai du forcer le css avec !important
 aussi "fun" fact , sur windows avec vs code
 ca a réussie a bouffer 9 Gig de ram
-![image](./our_ram.png)
+![image](./our_ram.png)utiliser 
+
+CTLR pour slection plusieur genre

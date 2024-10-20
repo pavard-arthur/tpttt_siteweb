@@ -15,6 +15,9 @@
                 Prix : {{ book.B_price }} €
             </h6>
             <a href="{{ url_for('edit_book', id=book.B_id) }}" class="btn btn-primary">Edit Book</a>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('add_to_favorites', book_id=book.B_id) }}" class="btn btn-success">Add to Favorites</a>
+        {% endif %}
         </div>
     </div>
 

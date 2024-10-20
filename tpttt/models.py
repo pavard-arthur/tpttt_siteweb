@@ -85,7 +85,7 @@ def get_books_by_genre(id: int):
 
 
 def get_favorites(user_id: str):
-    return User.query.get(user_id).favorites.all()
+    return User.query.get(user_id).favorites
 
 
 # ADD
@@ -95,11 +95,16 @@ def add_book(title, price, url, img, author_id, genres):
         B_price=price,
         B_url=url,
         B_img=img,
-        author_id=author_id,
-        genres=genres  # Handle many-to-many relationship
+        A_id=author_id.A_id  # Extract the ID from the author_id object
     )
+    
     db.session.add(book)
     db.session.commit()
+    
+    book.genres = genres
+    db.session.commit()
+
+
 
 
 def add_author(name):

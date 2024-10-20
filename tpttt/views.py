@@ -195,7 +195,7 @@ def edit():
 @login_required
 def edit_book(id):
     book = models.get_book(id)
-    form = BookForm(obj=book)  # Pre-fill form with existing book data
+    form = BookForm(obj=book) 
     if form.validate_on_submit():
         models.update_book(
             book,
@@ -213,7 +213,7 @@ def edit_book(id):
 @login_required
 def edit_author(id):
     author = models.get_author(id)
-    form = AuthorForm(obj=author)  # Pre-fill form with existing author data
+    form = AuthorForm(obj=author) 
     if form.validate_on_submit():
         models.update_author(author, name=form.name.data)
         return redirect(url_for("author", id=id))
@@ -224,7 +224,7 @@ def edit_author(id):
 @login_required
 def edit_genre(id):
     genre = models.get_genre(id)
-    form = GenreForm(obj=genre)  # Pre-fill form with existing genre data
+    form = GenreForm(obj=genre) 
     if form.validate_on_submit():
         models.update_genre(genre, name=form.name.data)
         return redirect(url_for("genre", id=id))
@@ -233,7 +233,7 @@ def edit_genre(id):
 
 # REMOVE
 # #rawdog
-@app.route("/remove/book/<int:id>")
+@app.route("/remove/book/<int:id>", methods=("GET", "POST"))
 @login_required
 def remove_book(id):
     book = models.get_book(id)
@@ -243,7 +243,7 @@ def remove_book(id):
     return redirect(url_for("home"))
 
 
-@app.route("/remove/author/<int:id>")
+@app.route("/remove/author/<int:id>", methods=("GET", "POST"))
 @login_required
 def remove_author(id):
     author = models.get_author(id)
@@ -253,7 +253,7 @@ def remove_author(id):
     return redirect(url_for("home"))
 
 
-@app.route("/remove/genre/<int:id>")
+@app.route("/remove/genre/<int:id>", methods=("GET", "POST"))
 @login_required
 def remove_genre(id):
     genre = models.get_genre(id)
@@ -271,14 +271,14 @@ def favorites():
     return render_template("favorites.html", books=favorites)
 
 
-@app.route("/add/favorite/<int:book_id>")
+@app.route("/add/favorite/<int:book_id>", methods=("GET", "POST"))
 @login_required
 def add_to_favorites(book_id):
     models.add_favorite(current_user.U_username, book_id)
     return redirect(url_for("favorites"))
 
 
-@app.route("/remove/favorite/<int:book_id>")
+@app.route("/remove/favorite/<int:book_id>", methods=("GET", "POST"))
 @login_required
 def remove_from_favorites(book_id):
     models.remove_favorite(current_user.U_username, book_id)
