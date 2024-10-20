@@ -13,3 +13,9 @@ WTForms==3.0.1
 flask-sqlalchemy
 flask-wtf
 flask-login
+wtforms_sqlalchemy
+
+# code quality
+# mypy
+# pylint
+# yapf

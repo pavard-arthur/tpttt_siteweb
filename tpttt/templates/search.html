@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Search</h1>
+
+<div class="accordion" id="searchAccordion">
+    <!-- Search for Books -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingBooks">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBooks" aria-expanded="true" aria-controls="collapseBooks">
+                Search Books
+            </button>
+        </h2>
+        <div id="collapseBooks" class="accordion-collapse collapse show" aria-labelledby="headingBooks" data-bs-parent="#searchAccordion">
+            <div class="accordion-body">
+                <form action="{{ url_for('search_books') }}" method="get">
+                    <div class="mb-3">
+                        <label for="bookTitle" class="form-label">Book Title</label>
+                        <input type="text" class="form-control" id="bookTitle" name="title">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search for Authors -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingAuthors">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAuthors" aria-expanded="false" aria-controls="collapseAuthors">
+                Search Authors
+            </button>
+        </h2>
+        <div id="collapseAuthors" class="accordion-collapse collapse" aria-labelledby="headingAuthors" data-bs-parent="#searchAccordion">
+            <div class="accordion-body">
+                <form action="{{ url_for('search_authors') }}" method="get">
+                    <div class="mb-3">
+                        <label for="authorName" class="form-label">Author Name</label>
+                        <input type="text" class="form-control" id="authorName" name="name">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search for Genres -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingGenres">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGenres" aria-expanded="false" aria-controls="collapseGenres">
+                Search Genres
+            </button>
+        </h2>
+        <div id="collapseGenres" class="accordion-collapse collapse" aria-labelledby="headingGenres" data-bs-parent="#searchAccordion">
+            <div class="accordion-body">
+                <form action="{{ url_for('search_genres') }}" method="get">
+                    <div class="mb-3">
+                        <label for="genreName" class="form-label">Genre Name</label>
+                        <input type="text" class="form-control" id="genreName" name="name">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

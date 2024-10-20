@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Edit Book: {{ form.title.data }}</h1>
+<form method="post">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        {{ form.title(class="form-control") }}
+        {% for error in form.title.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        {{ form.price(class="form-control") }}
+        {% for error in form.price.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <label for="url" class="form-label">Book URL</label>
+        {{ form.url(class="form-control") }}
+        {% for error in form.url.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <label for="img" class="form-label">Image URL</label>
+        {{ form.img(class="form-control") }}
+        {% for error in form.img.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <label for="genres" class="form-label">Genres</label>
+        {{ form.genres(class="form-control") }} <!-- Assuming form.genres is a select field -->
+        {% for error in form.genres.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{{ url_for('book', id=form.id.data) }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

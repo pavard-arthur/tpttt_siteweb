@@ -1,12 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{title}}</h1>
-<div class="sample">
-<a href="{{url_for('author')}}">
-    <p>add author</p>
-    </a>
-    <a href="{{url_for('book')}}">
-        <p>add book</p>
-        </a>
-</div>
+<h1>Add New</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Author</td>
+            <td><a href="{{ url_for('add_author') }}" class="btn btn-primary">Add Author</a></td>
+        </tr>
+        <tr>
+            <td>Book</td>
+            <td><a href="{{ url_for('add_book') }}" class="btn btn-primary">Add Book</a></td>
+        </tr>
+        <tr>
+            <td>Genre</td>
+            <td><a href="{{ url_for('add_genre') }}" class="btn btn-primary">Add Genre</a></td>
+        </tr>
+    </tbody>
+</table>
 {% endblock %}

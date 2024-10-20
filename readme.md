@@ -1,6 +1,8 @@
-# Projet Web Title Plot Twister Tonic T3
+# Projet Web Title Plot Twister Tonic 
+## -> TP_TTT (tp 3t) site web
 # Contributors : 
 ### PAVARD Arthur info21A (alternance)
+### [https://github.com/pavard-arthur/tpttt_siteweb](https://github.com/pavard-arthur/tpttt_siteweb)
 
 discovery of the flask framework with an web app 
 with : 
@@ -53,16 +55,27 @@ flask run
     - [X] DB user create
     - [X] DB user load
     - [X] DB user change password
-- [ ] views
+- [X] views
     - [X] main page samples
     - [X] book
     - [X] author
-    - [ ] favorites
-- [ ] edit
-    - [ ] book
+    - [X] genres
+- [X] edit
+    - [X] book
     - [X] author
-    - [ ] favorites
-- [ ] add
-    - [ ] book
-    - [ ] author
-    - [ ] favorites
+    - [X] favorites
+- [X] add
+    - [X] book
+    - [X] author
+    - [X] favorites
+    - [X] genres
+- [X] search
+    - [X] books by author
+    - [X] author by books
+    - [X] book search
+    - [X] author search
+    - [X] genres search
+- [X] genres
+    - [X] create genres table
+    - [X] many-to-many relationship (books & genres)
+    - [X] genres management (form or command)

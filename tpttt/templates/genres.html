@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Genres</h1>
+<div>
+    <a href="{{ url_for('add_genre') }}" class="btn btn-primary">Add Genre</a>
+</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for genre in genres %}
+        <tr>
+            <td>{{ genre.id }}</td>
+            <td>{{ genre.C_name }}</td>
+            <td>
+                <a href="{{ url_for('edit_genre', id=genre.id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ url_for('remove', item_type='genre', id=genre.id) }}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
